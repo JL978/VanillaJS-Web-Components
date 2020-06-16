@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    <title>Form Validation</title>
+</head>
+<style>
+*{
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.container{
+    width: 400px;
+    padding: 0;
+}
+
+form{
+    padding: 30px 40px;
+}
+legend{
+    font-weight: 600;
+}
+
+</style>
+
+<body class="bg-light">
+    <div class="container shadow bg-primary rounded">
+        <form>
+            <legend class="text-center">Register Now</legend>
+            <div class="form-group mt-4">
+                <label for="username">Username</label>
+                <input type="text" placeholder="Enter Username" id="username" class="form-control">
+            </div>
+            <div class="form-group mt-4">
+                <label for="email">Email</label>
+                <input type="text" placeholder="Enter Email" id="email" class="form-control">
+            </div>
+            <div class="form-group mt-4">
+                <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" id="password" class="form-control">
+            </div>
+            <div class="form-group mt-4">
+                <label for="password-again">Confirm Password</label>
+                <input type="password" placeholder="Enter Password Again" id="password-again" class="form-control">
+            </div>
+        
+            <input type="submit" value="Submit" class="btn btn-secondary btn-block mt-5">
+        </form>
+    </div>
+</body>
+
+<script>
+    const form = document.querySelector('form')
+    const fields = document.querySelectorAll('.form-control')
+    const errors = {
+        'username': "Username must be between 3 and 20 character",
+        'email': "Enter a valid email",
+        'password': "Password must be between 3 and 20 character",
+        'password-again': "Username must be between 3 and 20 character"
+    }
+    form.addEventListener('submit', (e)=>{
+        e.preventDefault()
+        fields.forEach(field => {
+            UI.removeWarnings()
+            if (field.value === ''){
+                UI.warningText('Please fill out this field')
+            }else{
+                if (!CheckField(field, field.id)){
+                    UI.color(field, false)
+                    UI.warningText(errors[field.id])
+                }else{
+                    UI.color(field)
+                }
+            }
+        })
+    })
+    
+    
+    
+    class CheckField{
+        static check(inputEl, type){
+            if (type === 'username' ||type === 'password'){
+                return this.checkLength(inputEl.value, 3, 20)
+            }
+    
+            if (type === 'email'){
+                return this.isEmail(inputEl.value)
+            }
+            
+            if (type === 'password-again'){
+                const pass = document.querySelector('#password').value
+                return pass === inputEl.value
+            }
+        }
+
+  
+        isEmail(email){
+            if (!email.includes('@')){
+                return false
+            }
+            
+            [name, domain] = email.split('@')
+            console.log(name, domain.split('.').length)
+            return name.length>0 && domain.split('.').length === 2 && domain.split('.')[1] === 'com'
+        }
+
+        checkLength(username, l, u){
+            return l <= username.length && username.length <= u
+        }
+    }
+
+    class UI{
+        static color(inputEl, valid=True){
+            if (valid){
+                el.classList.remove('is-invalid')
+                el.classList.add('is-valid')
+            }else{
+                el.classList.remove('is-valid')
+                el.classList.add('is-invalid')
+            }
+        }
+
+        static warningText(inputEl, message){
+            const newEl = document.createElement('div')
+            newEl.className = 'invalid-feedback'
+            newEl.innerHTML = message
+            inputEl.parentElement.appendChild(newEl)
+        }
+
+        static removeWarnings(){
+            document.querySelectorAll('.invalid-feedback').forEach(el =>{
+                el.remove()
+            })
+        }
+    }
+
+</script>
+
+</html>
