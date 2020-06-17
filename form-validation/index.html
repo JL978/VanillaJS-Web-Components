@@ -44,7 +44,7 @@ legend{
             </div>
             <div class="form-group mt-4">
                 <label for="password">Password</label>
-            <input type="password" placeholder="Enter Password" id="password" class="form-control">
+                <input type="password" placeholder="Enter Password" id="password" class="form-control">
             </div>
             <div class="form-group mt-4">
                 <label for="password-again">Confirm Password</label>
@@ -68,13 +68,14 @@ legend{
     form.addEventListener('submit', (e)=>{
         e.preventDefault()
         fields.forEach(field => {
-            UI.removeWarnings()
+            UI.removeWarning(field)
             if (field.value === ''){
-                UI.warningText('Please fill out this field')
+                UI.color(field, false)
+                UI.warningText(field, 'Please fill out this field')
             }else{
-                if (!CheckField(field, field.id)){
+                if (!check(field, field.id)){
                     UI.color(field, false)
-                    UI.warningText(errors[field.id])
+                    UI.warningText(field, errors[field.id])
                 }else{
                     UI.color(field)
                 }
@@ -82,62 +83,64 @@ legend{
         })
     })
     
-    
-    
-    class CheckField{
-        static check(inputEl, type){
-            if (type === 'username' ||type === 'password'){
-                return this.checkLength(inputEl.value, 3, 20)
-            }
-    
-            if (type === 'email'){
-                return this.isEmail(inputEl.value)
-            }
-            
-            if (type === 'password-again'){
-                const pass = document.querySelector('#password').value
-                return pass === inputEl.value
-            }
+    function check(inputEl, type){
+        if (type === 'username' ||type === 'password'){
+            return CheckField.checkLength(inputEl.value, 3, 20)
         }
 
-  
-        isEmail(email){
+        if (type === 'email'){
+            return CheckField.isEmail(inputEl.value)
+        }
+        
+        if (type === 'password-again'){
+            const pass = document.querySelector('#password').value
+            return pass === inputEl.value
+        }
+    }
+    
+    class CheckField{
+        static isEmail(email){
             if (!email.includes('@')){
                 return false
             }
             
-            [name, domain] = email.split('@')
-            console.log(name, domain.split('.').length)
+            const [name, domain] = email.split('@')
             return name.length>0 && domain.split('.').length === 2 && domain.split('.')[1] === 'com'
         }
 
-        checkLength(username, l, u){
+        static checkLength(username, l, u){
             return l <= username.length && username.length <= u
         }
     }
 
     class UI{
-        static color(inputEl, valid=True){
+        static color(inputEl, valid=true){
             if (valid){
-                el.classList.remove('is-invalid')
-                el.classList.add('is-valid')
+                inputEl.classList.remove('is-invalid')
+                inputEl.classList.add('is-valid')
             }else{
-                el.classList.remove('is-valid')
-                el.classList.add('is-invalid')
+                inputEl.classList.remove('is-valid')
+                inputEl.classList.add('is-invalid')
             }
         }
 
         static warningText(inputEl, message){
             const newEl = document.createElement('div')
-            newEl.className = 'invalid-feedback'
+            newEl.className = 'feedback  invalid-feedback'
             newEl.innerHTML = message
             inputEl.parentElement.appendChild(newEl)
         }
 
-        static removeWarnings(){
-            document.querySelectorAll('.invalid-feedback').forEach(el =>{
-                el.remove()
-            })
+        static removeWarning(inputEl){
+            const lastChild = inputEl.parentElement.lastChild
+            try {
+                if (lastChild.classList.contains('feedback')){
+                inputEl.parentElement.removeChild(lastChild)
+                }
+            } catch (error) {
+                return
+            }
+            
         }
     }
 
