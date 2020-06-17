@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal CTA</title>
+</head>
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button{
+    padding: 20px 30px;
+    border: none;
+    border-radius: 2px;
+    font-size: 2rem;
+    background-color: #3e648d;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+button:active{
+    background-color: #446E9B;
+    transform: scale(0.97);
+}
+
+
+.modal{
+    position: absolute;
+    max-width: 500px;
+    display: grid;
+    grid-gap: 20px;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.close-modal{
+    height: 30px;
+    display: flex;
+    justify-content: end;
+    align-items: center; 
+    position: relative;
+}
+
+.close-modal::before, .close-modal::after{
+    position: absolute;
+    display: block;
+    content: '';
+    width: 30px;
+    height: 3px;
+    background-color: grey;
+    cursor: pointer;
+}
+
+
+.close-modal::before{
+    transform: rotate(45deg);
+}
+
+
+.close-modal::after{
+    transform: rotate(-45deg);
+}
+
+.cta-description{
+    line-height: 1.5rem;
+}
+
+form{
+    display: grid;
+    grid-gap: 10px;
+}
+
+
+.cta-input{
+    padding: 10px 10px;
+    border: 0.5px solid grey;
+    border-radius: 3px;
+}
+
+.btn{
+    border: none;
+    padding: 10px 0;
+    margin: 20px 0;
+    font-weight: 900;
+    letter-spacing: 0.1px;
+    border-radius: 3px;
+}
+
+.btn:active{
+    transform: scale(0.97);
+}
+
+</style>
+<body>
+    <button>
+        Click Me!
+    </button>
+
+    <div class="modal">
+        <div class="close-modal"></div>
+        <div class="cta-headline">
+            <h1 class="headline">
+                Subscribe to be superhuman
+            </h1>
+        </div>
+        <div class="cta-description">
+            <p class="description">
+                Each week we will be sending you tips to live your best life
+            </p>
+            <p class="description">
+                No BS. Only quality goodies!
+            </p>
+        </div>
+        <form>
+            <label for="email">Your email:</label>
+            <input type="text" id="email" placeholder="Your Email" class='cta-input'>
+            <input type="button" value="Make Me Superhuman" class="btn">
+        </form>
+    </div>
+
+</body>
+</html>
