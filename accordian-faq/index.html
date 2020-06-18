@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordian FAQ</title>
+</head>
+
+<style>
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding: 0;
+}
+
+body{
+    display: grid;
+    height: 100vh;
+    align-items: center;
+    font-family: Helvetica, Arial, sans-serif;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: 30vh auto;
+}
+
+.accordian-container{
+    display: grid;
+    align-self:start;
+    justify-items: stretch;
+    align-items: center;
+    text-align: center;
+    grid-column: 2/13;
+    grid-row: 2/span 1;
+    grid-gap: 20px;
+}
+
+.title{
+    color: rgb(0,0,0,0.7);
+}
+
+.faq{
+    display: grid;
+}
+
+.faq>*{
+    border-top: lightgrey solid 1px;
+}
+
+.faq:last-child{
+    border-bottom: lightgrey solid 1px;
+}
+
+.qa{
+    padding: 10px 30px;
+    text-align: left;
+    display: grid;
+    cursor: pointer;
+}
+
+.question{
+    margin: 10px 0;
+}
+.answer{
+    font-size: 0.75rem;
+    overflow: hidden;
+    max-height:0;
+    transition: max-height 0.3s ease-in-out;
+    color: rgba(0,0,0,0.7);
+}
+
+.answer.active{
+    max-height: 100px;
+}
+
+</style>
+
+<body>
+    <div class="accordian-container">
+        <div class="title">
+            <h1 class="title-main">FAQ</h1>
+            <small class="title-helper">Cool Facts About Us</small>
+        </div>
+        <div class="faq">
+            <div class="qa">
+                <div class="question">Question 1</div>
+                <div class="answer">Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ipsum ipsa architecto doloremque eum et ad voluptas modi omnis officia vitae. 
+                    Esse corrupti rem itaque nesciunt quia sequi obcaecati iure ipsa.</div>
+            </div>
+            <div class="qa">
+                <div class="question">Question 2</div>
+                <div class="answer">Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ipsum ipsa architecto doloremque eum et ad voluptas modi omnis officia vitae. 
+                    Esse corrupti rem itaque nesciunt quia sequi obcaecati iure ipsa.</div>
+            </div>
+            <div class="qa">
+                <div class="question">Question 3</div>
+                <div class="answer">Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ipsum ipsa architecto doloremque eum et ad voluptas modi omnis officia vitae. 
+                    Esse corrupti rem itaque nesciunt quia sequi obcaecati iure ipsa.</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+const tickets = document.querySelectorAll(".qa")
+
+function handleClick(){
+    this.querySelector('.answer').classList.toggle('active')
+}
+
+tickets.forEach(ticket => ticket.addEventListener('click', handleClick))
+</script>
+
+</html>
+
